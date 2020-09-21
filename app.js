@@ -65,10 +65,11 @@ function cadastrarDespesa() {
     )
     
     if (despesa.validarDados()) {
-        console.log('Dados validos')
+        bd.gravar(despesa) // recuperando o objeto literal 
+        $('#sucessoGravacao').modal('show') // bibilioteca JQuery
     }
     else {
-        console.log("Dados Invalidos")
+        $('#erroGravacao').modal('show') // bibilioteca JQuery
     }
-    //bd.gravar(despesa) // recuperando o objeto literal 
+   
 }
