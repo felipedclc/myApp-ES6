@@ -89,6 +89,13 @@ function cadastrarDespesa() {
         document.getElementById('modal_button').className = 'btn btn-outline-success'
 
         $('#modalGravacao').modal('show') // bibilioteca JQuery
+
+        ano.value = ''
+        mes.value = ''
+        dia.value = ''
+        tipo.value = ''
+        descricao.value = ''
+        valor.value = ''
     }
     else {
         document.getElementById('modal_titulo').innerHTML = 'Erro na inclusão do registro'
