@@ -49,7 +49,7 @@ class Bd {
         
         let id = localStorage.getItem('id')
 
-        for(let i=1; i<id; i++) { // varrendo todos itens no localStoarge
+        for(let i=1; i<=id; i++) { // varrendo todos itens no localStoarge
             let despesa = JSON.parse(localStorage.getItem(i)) // obtendo os itens e passando de JSON para obj
             if(despesa !== null) {
                 listaDespesas.push(despesa) // add os itens no array despesas
@@ -103,5 +103,31 @@ function cadastrarDespesa() {
 function carregaListaDespesas() {    
     listaDespesas = bd.recuperarTodosRegistros() 
     
-    console.log(listaDespesas)
+    let listaConsultas = document.getElementById('listaConsultas') // selecionando o tbody
+
+    listaDespesas.forEach(d => {
+        // criando a linha
+        let linha = listaConsultas.insertRow() // associando a linha criada no tbody 
+
+        linha.insertCell(0).innerHTML = `${d.dia} / ${d.mes} / ${d.ano}` 
+        // ajustando o tipo
+        if(d.tipo === '1') {
+            d.tipo = 'Alimentação'
+        }
+        else if(d.tipo === '2') {
+            d.tipo = 'Educação'
+        }
+        else if(d.tipo === '3') {
+            d.tipo = 'Lazer'
+        }
+        else if(d.tipo === '4') {
+            d.tipo = 'Saúde'
+        }
+        else if(d.tipo === '5') {
+            d.tipo = 'Transporte'
+        }
+        linha.insertCell(1).innerHTML = d.tipo
+        linha.insertCell(2).innerHTML = d.descricao
+        linha.insertCell(3).innerHTML = d.valor
+    })
 }
