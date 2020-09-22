@@ -42,6 +42,21 @@ class Bd {
         localStorage.setItem(id, JSON.stringify(d))
         localStorage.setItem('id', id)    
     }
+
+    recuperarTodosRegistros() {
+        
+        let listaDespesas = Array()
+        
+        let id = localStorage.getItem('id')
+
+        for(let i=1; i<id; i++) { // varrendo todos itens no localStoarge
+            let despesa = JSON.parse(localStorage.getItem(i)) // obtendo os itens e passando de JSON para obj
+            if(despesa !== null) {
+                listaDespesas.push(despesa) // add os itens no array despesas
+            }
+        }   
+        return listaDespesas
+    }
 }
 
 let bd = new Bd()
@@ -83,5 +98,10 @@ function cadastrarDespesa() {
         document.getElementById('modal_button').className = 'btn btn-outline-danger'
         $('#modalGravacao').modal('show') // bibilioteca JQuery
     }
-   
+}
+
+function carregaListaDespesas() {    
+    listaDespesas = bd.recuperarTodosRegistros() 
+    
+    console.log(listaDespesas)
 }
