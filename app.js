@@ -52,6 +52,7 @@ class Bd {
         for(let i=1; i<=id; i++) { // varrendo todos itens no localStoarge
             let despesa = JSON.parse(localStorage.getItem(i)) // obtendo os itens e passando de JSON para obj
             if(despesa !== null) {
+                despesa.id = i
                 listaDespesas.push(despesa) // add os itens no array despesas
             }
         }   
@@ -88,6 +89,10 @@ class Bd {
         
         return despesasFiltradas
     }
+
+    remover(id) {
+        localStorage.removeItem(id)
+    }
 }
 
 let bd = new Bd()
@@ -121,6 +126,7 @@ function cadastrarDespesa() {
 
         $('#modalGravacao').modal('show') // bibilioteca JQuery
 
+        // limpando os campos
         ano.value = ''
         mes.value = ''
         dia.value = ''
@@ -167,9 +173,20 @@ function carregaListaDespesas(listaDespesas = Array(), filtro = false) {
         else if(d.tipo === '5') {
             d.tipo = 'Transporte'
         }
-        linha.insertCell(1).innerHTML = d.tipo
+        linha.insertCell(1).innerHTML = d.tipo // insertCell (insere coluna) 
         linha.insertCell(2).innerHTML = d.descricao
         linha.insertCell(3).innerHTML = d.valor
+
+        /****** criando o botão de exclusão *************/
+        let btn = document.createElement('button')
+        btn.className = 'btn btn-danger' // class btn bootstrap
+        btn.innerHTML = '<i class="fas fa-times"></i>' // class fontAwesome
+        btn.id = d.id // associando o id do btn com o id da despesa
+        btn.onclick = function() {  
+            bd.remover(d.id)
+            window.location.reload() // atualizando a página após remover
+         }
+        linha.insertCell(4).append(btn) // append faz a inserção de 'btn'
     })
 }
 
